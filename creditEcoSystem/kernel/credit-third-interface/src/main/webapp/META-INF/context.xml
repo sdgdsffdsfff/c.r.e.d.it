@@ -1,0 +1,13 @@
+<Context>
+  <Resource name="jdbc/credit"
+            auth="Container"
+            type="javax.sql.DataSource"
+            driverClassName="oracle.jdbc.driver.OracleDriver"
+            url="jdbc:oracle:thin:@10.1.5.13:1521:clapp"
+            username="credit"
+            password="hKr81PxH"
+            maxActive="100"
+            maxIdle="30"
+            maxWait="10000"
+            defaultAutoCommit="false"   />
+</Context>

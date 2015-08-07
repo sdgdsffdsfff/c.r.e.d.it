@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:oxm="http://www.springframework.org/schema/oxm" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:cache="http://www.springframework.org/schema/cache" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+	
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd    
+        http://www.springframework.org/schema/beans   
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd    
+        http://www.springframework.org/schema/context   
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd  
+        http://www.springframework.org/schema/cache   
+        http://www.springframework.org/schema/cache/spring-cache.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+        http://www.springframework.org/schema/task
+    	http://www.springframework.org/schema/task/spring-task-4.0.xsd">
+
+	<mvc:resources mapping="/js/**" location="/js/" />
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/creditPage/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	
+	
+	<!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
+	<bean id="mappingJacksonHttpMessageConverter"
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<!-- <value>text/html;charset=UTF-8</value> -->
+				<value>application/json; charset=UTF-8</value>
+				 <value>text/plain;charset=utf-8</value>  
+                <value>text/html;charset=utf-8</value>  
+			</list>
+		</property>
+	</bean>
+	<!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="mappingJacksonHttpMessageConverter" /><!-- json转换器 -->
+			</list>
+		</property>
+	</bean>
+	<mvc:annotation-driven/>
+    
+    
+    <!-- 用来注册CONTROLLER -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
+
+	<!-- 注解缓存 -->
+	<cache:annotation-driven />
+	<!-- generic cache manager -->
+	<bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+		<property name="caches">
+			<set>
+				<bean
+					class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
+					p:name="default" />
+				<bean
+					class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
+					p:name="getAmtMapCache" />
+			</set>
+		</property>
+	</bean>
+	
+	
+
+	<bean id="sessionFactory_product"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="current_session_context_class">thread</prop>    
+				<prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>    	
+				<prop key="hibernate.dialect">
+					${hibernate.dialect}
+				</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.format_sql">false</prop>
+				<!-- <prop key="hibernate.hbm2ddl.auto">update</prop> -->
+				<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</prop>
+			</props>
+		</property>
+		<property name="packagesToScan">
+			<list>
+				<value>com.ctc.credit.kernel.model</value>
+				<value>com.ctc.credit.sys.sysconfig.model</value>
+				<value>com.ctc.credit.blackgreylist.model</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+		abstract="false" lazy-init="default" autowire="default">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory_product" />
+		</property>
+	</bean>
+	<tx:annotation-driven/>
+	
+	<context:component-scan base-package="com.ctc.credit.common"/>
+	<context:component-scan base-package="com.ctc.credit.kernel.commoninter"/>
+	<context:component-scan base-package="com.ctc.credit.kernel.controller"/>
+	<context:component-scan base-package="com.ctc.credit.kernel.dao" />
+	<context:component-scan base-package="com.ctc.credit.kernel.service" />
+	<context:component-scan base-package="com.ctc.credit.sys" />
+	<context:component-scan base-package="com.ctc.credit.blackgreylist"/>
+
+</beans>

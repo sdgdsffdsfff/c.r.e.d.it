@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+    
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:jdbc.properties</value>
+                <value>classpath:jms.properties</value>
+            </list>
+        </property>
+    </bean>
+    
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+	    <property name="jndiName">
+	      <value>java:comp/env/jdbc/credit</value>
+	    </property>
+  	</bean>
+  	
+	<bean id="sessionFactory_product"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="current_session_context_class">thread</prop>    
+				<prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>    	
+				<prop key="hibernate.dialect">
+					${hibernate.dialect}
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">false</prop>
+				<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</prop>
+			</props>
+		</property>
+		<property name="packagesToScan">
+			<list>
+				<value>com.ctc.credit.kernel.model</value>
+				<value>com.ctc.credit.sys.sysconfig.model</value>
+				<value>com.ctc.credit.blackgreylist.model</value>
+				<value>com.ctc.credit.qianhai.model</value>
+				<value>com.ctc.credit.antifraud.model</value>
+				<value>com.ctc.credit.lakala.model</value>
+				<value>com.ctc.credit.tongdun.model</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+		abstract="false" lazy-init="default" autowire="default">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory_product" />
+		</property>
+	</bean>
+	
+	<bean id="sessionFactory_product_readonly"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="proDataSource"></property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="current_session_context_class">thread</prop>    
+				<prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>    	
+				<prop key="hibernate.dialect">
+					${hibernate.dialect}
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">false</prop>
+				<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</prop>
+			</props>
+		</property>
+		<property name="packagesToScan">
+			<list>
+				<value>com.ctc.credit.kernel.model</value>
+				<value>com.ctc.credit.sys.sysconfig.model</value>
+				<value>com.ctc.credit.blackgreylist.model</value>
+				<value>com.ctc.credit.qianhai.model</value>
+				<value>com.ctc.credit.antifraud.model</value>
+				<value>com.ctc.credit.lakala.model</value>
+				<value>com.ctc.credit.tongdun.model</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="transactionManager_prod" 
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+		abstract="false" lazy-init="default" autowire="default">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory_product_readonly" />
+		</property>
+	</bean>
+</beans>

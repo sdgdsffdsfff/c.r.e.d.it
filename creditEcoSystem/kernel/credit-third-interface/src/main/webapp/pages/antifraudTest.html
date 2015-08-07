@@ -1,0 +1,326 @@
+<div class="row">
+	<div id="breadcrumb" class="col-xs-12">
+		<a href="#" class="show-sidebar">
+			<i class="fa fa-bars"></i>
+		</a>
+		<ol class="breadcrumb pull-left">
+			<li><a href="#">功能测试页面</a></li>
+			<li><a href="#">反欺诈规则测试</a></li>
+		</ol>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12 col-sm-12">
+		<div class="box no-drop">
+			<div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-bookmark"></i>
+					<span>反欺诈规则测试</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+					<a class="close-link">
+						<i class="fa fa-times"></i>
+					</a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content">
+				<form id="defaultForm" method="post" action="validators.html" class="form-horizontal">
+					<fieldset>
+						<legend>客户基本信息</legend>
+						<div class="form-group">	
+							<label class="col-sm-2 control-label">*业务系统</label>
+							<div class="col-sm-3">
+								<select class="form-control" name="" id="sourceSys">
+									<option value="">-- 选择一个来源系统 --</option>
+									<option value="01">信贷系统</option>
+									<option value="02">车贷系统</option>
+									<option value="03">消费金融系统</option>
+									<option value="04">其他系统</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">*申请单号</label>
+							<div class="col-sm-2">
+									<input type="text" id= "applyCode" class="form-control applyCode__" name="applyCode" disabled/>
+							</div>
+							<div class="col-sm-4">
+								<div class="radio-inline">
+									<label>
+										<input type="radio" onclick="setApplyCode();" class="form-control" name="radio-inline" checked>不指定，自动生成
+										<i class="fa fa-circle-o small"></i>
+									</label>
+								</div>
+								<div class="radio-inline">
+									<label>
+										<input type="radio" onclick="clearApplyCode();" class="form-control" name="radio-inline">指定申请单号
+										<i class="fa fa-circle-o small"></i>
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+								<label class="col-sm-2 control-label">*借款人姓名</label>
+								<div class="col-sm-2">
+									<input type="text" class="form-control" name="name" id="name" />
+								</div>
+								<label class="col-sm-2 control-label">*证件号码</label>
+								<div class="col-sm-2">
+									<input type="text" class="form-control" name="idcard" id="idcard" />
+								</div>								
+								<label class="col-sm-2 control-label">出生日期</label>
+								<div class="col-sm-2">
+									<input type="text" class="form-control datepicker" name="birthday" id="birthday" />
+								</div>								
+								<label class="col-sm-2 control-label">申请借款产品名称</label>
+								<div class="col-sm-2">
+									<select class="form-control" name="" id="productCode">
+									<option value="">-- 选择一个产品 --</option>
+									<option value="0000">信优贷19</option>
+									<option value="0001">信薪贷23</option>
+									<option value="0002">信薪房产贷23</option>
+									<option value="0003">信业房产贷23</option>
+									<option value="0004">信薪按揭贷21</option>
+									<option value="0005">信薪贷25</option>
+									<option value="0006">信薪房产贷25</option>
+									<option value="0007">信业房产贷25</option>
+									<option value="0008">信优贷21</option>
+									<option value="0009">信业房产贷27</option>
+									<option value="0010">信薪贷29</option>
+									<option value="0015">车贷_40</option>
+									<option value="0016">车贷_29.8</option>
+									<option value="0033">信优贷17_A11</option>
+									<option value="0036">信薪佳人贷21</option>
+									<option value="0037">信薪佳人贷25</option>
+									<option value="0039">信薪按揭贷23</option>
+									<option value="0042">信薪贷27</option>
+									<option value="0045">信优贷17_A16</option>
+									<option value="0048">信薪房产贷27</option>
+									<option value="0065">信薪按揭贷25</option>
+									<option value="0080">薪期贷13</option>
+									<option value="0081">薪期贷15</option>
+									<option value="0082">薪期贷17</option>
+								</select>
+								</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">申请时间</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control datepicker" name="applyDate" id="applyDate" data-date-format="yyyy/mm/dd"/>
+							</div>
+							<label class="col-sm-2 control-label">可认定工资</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" name="approveIncome" id="approveIncome" />
+							</div>								
+							<label class="col-sm-2 control-label">电子邮箱</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" name="Email" id="email" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">申请人手机号</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" name="mobile" id="mobile" />
+							</div>
+							<label class="col-sm-2 control-label">住宅电话</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" name="homePhone" id="homePhone"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">住宅地址</label>
+							<div class="col-sm-2">
+								<select class="" name="homeProvince" id="province_">
+								</select>
+							</div>
+							<div class="col-sm-2">
+								<select class="" name="homeCity" id="city_">
+								</select>
+							</div>
+							<div class="col-sm-2">
+								<select class="" name="homeDist" id="country_">
+								</select>
+							</div>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" name="homeAddress" id="homeAddress"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">房产地址</label>
+							<div class="col-sm-4">
+								<div class="radio-inline">
+									<label>
+										<input type="radio" onclick="setHousingAddress();" class="form-control" name="radio-inline">与住宅地址相同
+										<i class="fa fa-circle-o small"></i>
+									</label>
+								</div>
+								<div class="radio-inline">
+									<label>
+										<input type="radio" onclick="clearHousingAddress();" class="form-control" name="radio-inline" checked>不相同，请填写
+										<i class="fa fa-circle-o small"></i>
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label"></label>
+							<div class="col-sm-2">
+								<select class="" name="housingProvince" id="housingProvince">
+								</select>
+							</div>
+							<div class="col-sm-2">
+								<select class="" name="housingCity" id="housingCity">
+								</select>
+							</div>
+							<div class="col-sm-2">
+								<select class="" name="housingDist" id="housingDist">
+								</select>
+							</div>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" name="housingAddress" id="housingAddress"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">单位名称</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" name="companyName" id="companyName" />
+							</div>
+							<label class="col-sm-2 control-label">工作部门</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" name="department" id="department" />
+							</div>			
+							<label class="col-sm-2 control-label">入职年份</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control datepicker" name="inWorkTime" id="inWorkTime" />
+							</div>								
+							<label class="col-sm-2 control-label">单位电话</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" name="companyPhone" id="companyPhone" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">单位地址</label>
+							<div class="col-sm-2">
+								<select class="" name="companyProvince" id="companyProvince">
+								</select>
+							</div>
+							<div class="col-sm-2">
+								<select class="" name="companyCity" id="companyCity">
+								</select>
+							</div>
+							<div class="col-sm-2">
+								<select class="" name="companyDist" id="companyDist">
+								</select>
+							</div>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" name="companyAddress" id="companyAddress"/>
+							</div>
+						</div>
+					</fieldset>
+					<fieldset>
+						<legend>配偶信息</legend>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">配偶姓名</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" name="spouseName" id="spouseName"/>
+							</div>							
+							<label class="col-sm-2 control-label">配偶证件号码</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" name="spouseIdNo" id="spouseIdNo"/>
+							</div>							
+							<label class="col-sm-2 control-label">配偶单位名称</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" name="spouseCompany" id="spouseCompany"/>
+							</div>							
+							<label class="col-sm-2 control-label">配偶手机号码</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" name="spouseMobile" id="spouseMobile"/>
+							</div>
+						</div>
+					</fieldset>
+					<fieldset>
+						<legend>联系人信息</legend>
+						<div class="col-sm-12">
+							<div>
+								<button id="btnAddContact" onclick="addContact();" type="button" class="btn btn-primary btn-label btn-xs">
+								<i class="fa fa-plus"></i>
+									<span>添加联系人</span>
+								</button>
+								<button id="btnAddContact" onclick="removeContact();" type="button" class="btn btn-primary btn-label btn-xs">
+								<i class="fa fa-trash-o"></i>
+									<span>删除联系人</span>
+								</button>
+							</div>
+							<div class="box no-drop" style="background: white">
+								<div class="box-header">
+									<div class="box-name">
+										<i class="fa fa-table"></i>
+										<span>联系人信息</span>
+									</div>
+								</div>
+								<table class="table table-bordered beauty-table table-hover" id="dataTable">
+									<thead>
+										<tr>
+											<th>*姓名</th>
+											<th>*关系</th>
+											<th>*联系号码</th>
+											<th>证件号码</th>
+											<th>单位名称</th>
+											<th>部门</th>
+											<th>单位电话</th>
+										</tr>
+									</thead>
+									<tbody id="tableContact">
+									</tbody>
+								</table>
+							</div>
+							<div>
+								<button id="btnAddContact" onclick="executeRule();" type="button" class="btn btn-primary btn-label btn-xs">
+								<i class="fa fa-check"></i>
+									<span>提交并执行规则</span>
+								</button>
+							</div>
+						</div>
+					</fieldset>
+					<fieldset>
+						<legend>规则执行结果--申请单号：（<span class="applyCode1__"></span>）</legend>
+							<div class="col-sm-12">
+								<div class="box no-drop" style="background: white">
+									<div class="box-header">
+										<div class="box-name">
+											<i class="fa fa-table"></i>
+											<span>命中规则信息</span>
+										</div>
+									</div>
+									<table class="table table-bordered beauty-table table-hover">
+										<thead>
+											<tr>
+												<th>序号</th>
+												<th>规则ID</th>
+												<th>规则描述</th>
+												<th>匹配件来源</th>
+												<th>匹配件单号</th>
+											</tr>
+										</thead>
+										<tbody id="tableRuleResult">
+										</tbody>
+									</table>
+								</div>
+							</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="js/select2.min.js"></script>
+<script src="js/UUID.js"></script>
+<script src="js/location.js"></script>
+<script src="js/antifraudTest.js"></script>
